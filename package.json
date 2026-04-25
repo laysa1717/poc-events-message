@@ -1,0 +1,39 @@
+{
+  "name": "poc-events-message",
+  "version": "1.0.0",
+  "description": "Poc para testar alto consumo de mensagens do kafka",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "ts-node src/main.ts",
+    "start:dev": "ts-node --transpile-only src/main.ts",
+    "start:prod": "node dist/main.js",
+    "kafka:post-10": "ts-node src/scripts/post-ten-messages.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laysa1717/poc-events-message.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/laysa1717/poc-events-message/issues"
+  },
+  "homepage": "https://github.com/laysa1717/poc-events-message#readme",
+  "dependencies": {
+    "@nestjs/common": "^11.1.19",
+    "@nestjs/core": "^11.1.19",
+    "@nestjs/platform-express": "^11.1.19",
+    "kafkajs": "^2.2.4",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}

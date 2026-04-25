@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poc-events-message
+  labels:
+    app: poc-events-message
+spec:
+  replicas: 15
+  selector:
+    matchLabels:
+      app: poc-events-message
+  template:
+    metadata:
+      labels:
+        app: poc-events-message
+    spec:
+      containers:
+        - name: api
+          image: <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/poc-events-message:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+            - name: KAFKA_BROKER
+              value: "<MSK_BOOTSTRAP_BROKER>:9092"
+            - name: KAFKA_TOPIC
+              value: "poc-events"
+            - name: KAFKA_CONSUMER_GROUP_ID
+              value: "poc-events-consumer-group"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
